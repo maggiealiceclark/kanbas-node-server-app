@@ -5,6 +5,7 @@ function ModuleRoutes(app) {
     db.modules = db.modules.filter((m) => m._id !== mid);
     res.sendStatus(200);
   });
+  
 
   app.post("/api/courses/:cid/modules", (req, res) => {
     const { cid } = req.params;

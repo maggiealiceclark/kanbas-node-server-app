@@ -8,8 +8,20 @@ function CourseRoutes(app) {
     res.send(course);
   });
   app.get('/api/courses', (req, res) => {
+    console.log("getting courses");
       const courses = Database.courses;
       res.send(courses);
+    });
+    app.get("/api/courses/:id", (req, res) => {
+      console.log("is this api working");
+      const { id } = req.params;
+      const course = Database.courses
+        .find((c) => c._id === id);
+      if (!course) {
+        res.status(404).send("Course not found");
+        return;
+      }
+      res.send(course);
     });
   
   //   const { id } = req.params;
@@ -27,8 +39,9 @@ function CourseRoutes(app) {
     Database.courses = Database.courses.map((c) =>
       c._id === id ? { ...c, ...course } : c
     );
-    res.send(course);
+    res.sendStatus(204);
   });
+
 
   app.delete("/api/courses/:id", (req, res) => {
     const { id } = req.params;
